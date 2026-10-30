@@ -22,6 +22,7 @@
 @media(max-width:760px){main{padding:0 12px 24px}.masthead span{font-size:10px}.wordmark{font-size:25px}.intro{display:block;padding:14px 0 20px}.intro p{max-width:100%;margin-top:10px}.workshop{grid-template-columns:1fr 1fr;gap:18px 12px}.play-column{grid-column:1/-1;grid-row:1}.arena{aspect-ratio:4/3}.settings-head{grid-column:2;grid-row:2}.settings-head button{min-height:64px;font-size:24px}.settings fieldset:nth-of-type(1){grid-column:1/-1;grid-row:3}.settings fieldset:nth-of-type(1) .choices{flex-direction:row}.settings fieldset:nth-of-type(2){grid-column:1/-1;grid-row:4}.settings fieldset:nth-of-type(3){grid-column:1;grid-row:5}.settings fieldset:nth-of-type(4){grid-column:2;grid-row:5}.settings fieldset:nth-of-type(5){grid-column:1/-1;grid-row:6}.settings .name-field{grid-row:7}.choice canvas{height:65px}.settings legend{font-size:16px}.small-choices .choice{min-height:76px}.prompt-section{display:block;padding:18px}.prompt-section>div+div{margin-top:24px}.hud{font-size:11px}.stage-label{font-size:10px}.overlay-card h2{font-size:18px}.overlay-card p{font-size:11px}.overlay{padding:10px}#start{font-size:21px;min-width:170px}.control-hint{width:100%}.under-stage{flex-wrap:wrap}.prompt-actions{flex-wrap:wrap}.prompt-actions button{flex:1}.prompt-section h2{font-size:26px}.footer{flex-direction:column;gap:10px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 .stage-top,.overlay,.control-hint,#power,#pause{display:none!important}#game{touch-action:auto;cursor:default}
+.preview-caption{flex:1;padding:2px 8px;font-size:14px;line-height:1.45;color:#20213b}.preview-caption strong{display:block;font-size:17px;font-weight:900}.preview-caption span{display:block}@media(max-width:480px){.preview-caption{flex-basis:100%;padding:4px 0;font-size:12px}.preview-caption strong{font-size:15px}}
 </style>
 </head>
 <body>
@@ -219,6 +220,10 @@ class FlightGame{
  foe(ctx,x,y,t){ctx.save();ctx.translate(x,y);ellipse(ctx,0,20,17,5,'#1d3c3a33');rect(ctx,-20,-13,40,28,10,'#d8b887','#3a5448',2);rect(ctx,-12,-7,25,13,5,'#435e57');ellipse(ctx,-3,-1,3,3,'#f2dfab');ellipse(ctx,7,-1,3,3,'#f2dfab');path(ctx,[['moveTo',-5,11],['lineTo',6,11]],null,'#886b4d',2);ctx.save();ctx.translate(0,-19);ctx.scale(Math.cos(t*22),1);ellipse(ctx,0,0,35,3,'#e3d9b4','#3a5448',1);ctx.restore();ctx.restore();}
  loop(now){const dt=Math.min(.034,(now-(this.last||now))/1000);this.last=now;if(!document.hidden){if(this.state!=='paused'&&this.state!=='won'&&this.state!=='lost')this.clock+=dt;this.update(dt);this.render();}requestAnimationFrame(this.loop);}
 }
+const caption=document.createElement('p');caption.className='preview-caption';
+const captionTitle=document.createElement('strong');captionTitle.textContent='А что, если добавить ещё безумия?';
+const captionText=document.createElement('span');captionText.textContent='Меняй героя, мир и суперсилу. Твоя комбинация станет заданием для ИИ.';
+caption.append(captionTitle,captionText);document.querySelector('.controls').append(caption);
 const arena=document.querySelector('.arena');
 arena.querySelectorAll('.comic').forEach(el=>el.remove());
 const comic=document.createElement('div');comic.className='comic';comic.hidden=true;comic.setAttribute('aria-live','polite');arena.append(comic);
